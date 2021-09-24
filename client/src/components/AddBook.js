@@ -1,6 +1,6 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { getAuthorsQuery } from '../queries/queries';
+import { useQuery, useMutation } from "@apollo/client";
+import { getAuthorsQuery, addBookMutation } from '../queries/queries';
 
 function DisplayAuthors(){
     const { loading, data } = useQuery(getAuthorsQuery);
@@ -16,10 +16,18 @@ function DisplayAuthors(){
 function AddBook() {
 
     const [book, setBook] = React.useState({ name: "", genre: "", authorId: "" });
-
+    
+    const [addBookMut] = useMutation(addBookMutation)
+    
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(book);
+        addBookMut({
+            variables: {
+              name: book.name,
+              genre: book.genre,
+              authorId: book.authorId
+            },
+        });
     }
 
     return (
