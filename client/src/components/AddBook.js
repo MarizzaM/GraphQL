@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { getAuthorsQuery, addBookMutation } from '../queries/queries';
+import { getAuthorsQuery, addBookMutation, getBooksQuery } from '../queries/queries';
 
 function DisplayAuthors(){
     const { loading, data } = useQuery(getAuthorsQuery);
@@ -27,6 +27,7 @@ function AddBook() {
               genre: book.genre,
               authorId: book.authorId
             },
+            refetchQueries: [{ query: getBooksQuery }]
         });
     }
 
