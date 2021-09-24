@@ -2,6 +2,9 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { getBooksQuery } from '../queries/queries';
 
+// components
+import BookDetails from './BookDetails';
+
 function BookList() {
 	
 	const {loading, error, data} = useQuery(getBooksQuery)
@@ -10,11 +13,14 @@ function BookList() {
 	if (error) return <p>Error :(</p>;
 
 	return (
-		<ul id="book-list">
-			{data.books.map(book => (
-				<li key={book.id}>{book.name}</li>
-			))}
-		</ul>
+		<div>
+			<ul id="book-list">
+				{data.books.map(book => (
+					<li key={book.id}>{book.name}</li>
+				))}
+			</ul>
+			<BookDetails />
+		</div>
 	);
 }
 
