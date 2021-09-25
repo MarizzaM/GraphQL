@@ -5,9 +5,11 @@ import { getBooksQuery } from '../queries/queries';
 // components
 import BookDetails from './BookDetails';
 
+
 function BookList() {
-	
-	const {loading, error, data} = useQuery(getBooksQuery)
+	const { loading, error, data } = useQuery(getBooksQuery);
+
+	const [ selected, setSelected ] = React.useState(null);
 
 	if (loading) return <p>Loading...</p>;
 	if (error) return <p>Error :(</p>;
@@ -15,11 +17,15 @@ function BookList() {
 	return (
 		<div>
 			<ul id="book-list">
-				{data.books.map(book => (
-					<li key={book.id}>{book.name}</li>
-				))}
+				{data.books.map((book) => {
+					return (
+						<li	key={book.id} onClick={() => { setSelected(book.id)	}}>
+							{book.name}
+						</li>
+					);
+				})}
 			</ul>
-			<BookDetails />
+			{selected ? <BookDetails bookId={selected} /> : <div>No book selected...</div>}
 		</div>
 	);
 }
